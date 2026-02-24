@@ -1,0 +1,5 @@
+{
+  "name": "Audio Transcriber & Converter",
+  "description": "Upload local audio files or enter a URL to transcribe audio to text with timestamps. Features include text search, audio playback, and format conversion (MP3/M4A/AAC).",
+  "requestFramePermissions": []
+}
