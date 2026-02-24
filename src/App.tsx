@@ -4,8 +4,6 @@ import { convertAudio } from './utils/ffmpeg';
 import { GoogleGenAI } from '@google/genai';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 type TranscriptionChunk = {
   time: string;
   text: string;
@@ -75,6 +73,12 @@ export default function App() {
     }, 1000);
 
     try {
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error('Gemini API key is not configured. Please set the GEMINI_API_KEY environment variable.');
+      }
+      const ai = new GoogleGenAI({ apiKey });
+
       const prompt = `Please provide a complete, verbatim transcription of the entire audio file. You must transcribe every single word without any omissions, summaries, or abbreviations. Include accurate timestamps for every sentence or phrase in the exact format [MM:SS] or [HH:MM:SS]. Ensure the timestamps precisely match the audio playback time. Do not include any other text besides the timestamps and the transcription.`;
       
       const reader = new FileReader();
